@@ -8,8 +8,9 @@ module Zulip
     module Cli
       module Commands
         class Add < Zulip::Reminder::Cli::Command
-          def initialize(timestamp, options)
+          def initialize(timestamp, message, options)
             @timestamp = timestamp
+            @message = message
             @options = options
           end
 

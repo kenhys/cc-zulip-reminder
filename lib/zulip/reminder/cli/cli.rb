@@ -23,12 +23,12 @@ module Zulip
         desc 'add TIMESTAMP', 'Command description...'
         method_option :help, aliases: '-h', type: :boolean,
                              desc: 'Display usage information'
-        def add(timestamp)
+        def add(timestamp, message)
           if options[:help]
             invoke :help, ['add']
           else
             require_relative 'commands/add'
-            Zulip::Reminder::Cli::Commands::Add.new(timestamp, options).execute
+            Zulip::Reminder::Cli::Commands::Add.new(timestamp, message, options).execute
           end
         end
       end
