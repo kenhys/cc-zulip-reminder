@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'zulip/reminder/config'
+require 'zulip/client'
 require_relative '../command'
 
 module Zulip
@@ -10,11 +12,27 @@ module Zulip
           def initialize(type, options)
             @type = type
             @options = options
+            @config = Zulip::Reminder::Config.new
           end
 
           def execute(input: $stdin, output: $stdout)
-            # Command logic goes here ...
-            output.puts "OK"
+            path = @config.task_path
+            unless path.exist?
+              puts "No registered jobs"
+              return
+            end
+            data = YAML.load_file(path.to_s)
+            job_id = data.keys.first
+            content = "#{@config.bot} delete job #{job_id}"
+            puts "Delete: #{content}"
+            client = Zulip::Client.new(site: @config.site,
+                                       username: @config.email,
+                                       api_key: @config.key)
+            client.send_message(type: :stream, to: @config.stream, subject: @config.topic, content: content)
+            data.delete(job_id)
+            open(path.to_s, "w+") do |file|
+              file.puts(YAML.dump(data))
+            end
           end
         end
       end
