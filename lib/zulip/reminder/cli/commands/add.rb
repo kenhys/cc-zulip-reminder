@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'zulip/client'
 require_relative '../command'
 
 module Zulip
