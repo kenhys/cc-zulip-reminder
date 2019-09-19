@@ -19,6 +19,18 @@ module Zulip
           puts "v#{Zulip::Reminder::Cli::VERSION}"
         end
         map %w(--version -v) => :version
+
+        desc 'add TIMESTAMP', 'Command description...'
+        method_option :help, aliases: '-h', type: :boolean,
+                             desc: 'Display usage information'
+        def add(timestamp)
+          if options[:help]
+            invoke :help, ['add']
+          else
+            require_relative 'commands/add'
+            Zulip::Reminder::Cli::Commands::Add.new(timestamp, options).execute
+          end
+        end
       end
     end
   end
