@@ -12,6 +12,7 @@ module Zulip
       attr_reader :stream
       attr_reader :topic
       attr_reader :bot
+      attr_reader :user
 
       def initialize
         parse_zuliprc
@@ -45,6 +46,7 @@ module Zulip
         @stream = yaml["stream"]
         @bot = yaml["bot"]
         @topic = yaml["topic"]
+        @user = yaml["user"]
       end
     end
   end
