@@ -20,6 +20,18 @@ module Zulip
         end
         map %w(--version -v) => :version
 
+        desc 'delete [TYPE]', 'Command description...'
+        method_option :help, aliases: '-h', type: :boolean,
+                             desc: 'Display usage information'
+        def delete(type=nil)
+          if options[:help]
+            invoke :help, ['delete']
+          else
+            require_relative 'commands/delete'
+            Zulip::Reminder::Cli::Commands::Delete.new(type, options).execute
+          end
+        end
+
         desc 'add TIMESTAMP', 'Command description...'
         method_option :help, aliases: '-h', type: :boolean,
                              desc: 'Display usage information'
