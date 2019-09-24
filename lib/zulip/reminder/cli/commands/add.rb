@@ -36,9 +36,16 @@ module Zulip
               else
                 content.match(/^Job (.+) created/) do |matched|
                   job_id = matched[1]
+                  puts "Fetched job id: #{job_id}"
                 end
               end
             end
+
+            if job_id.empty?
+              puts "Failed to confirm job"
+              return
+            end
+
             path = @config.task_path
             data = {}
             if path.exist?
