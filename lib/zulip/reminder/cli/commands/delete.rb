@@ -22,7 +22,25 @@ module Zulip
               return
             end
             data = YAML.load_file(path.to_s)
-            job_id = data.keys.first
+            job_id = nil
+            case @type
+            when "first"
+              job_id = data.keys.first
+            when "last"
+              job_id = data.keys.last
+            else
+              if @type.to_i != 0
+                job_id = @type.to_i
+              else
+                job_id = data.keys.first
+              end
+            end
+
+            unless job_id.nil?
+              puts "No registered jobs"
+              return
+            end
+
             content = "#{@config.bot} delete job #{job_id}"
             puts "Delete: #{content}"
             client = Zulip::Client.new(site: @config.site,
