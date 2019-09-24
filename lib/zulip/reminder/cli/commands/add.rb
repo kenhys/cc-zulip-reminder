@@ -25,6 +25,7 @@ module Zulip
             content = "#{@config.bot} add job \"#{convert_timestamp(@timestamp)}\" #{@config.bot} echo #{@config.user} #{@message}"
             puts "Register: #{content}"
             client.send_message(type: :stream, to: @config.stream, subject: @config.topic, content: content)
+            sleep 5
             result = fetch_bot_response
             task = ""
             job_id = ""
