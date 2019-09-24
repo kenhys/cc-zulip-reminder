@@ -33,6 +33,7 @@ module Zulip
               case  message["sender_email"]
               when @config.email
                 task = content
+                puts "Fetched task: #{task}"
               else
                 content.match(/^Job (.+) created/) do |matched|
                   job_id = matched[1]
@@ -43,6 +44,11 @@ module Zulip
 
             if job_id.empty?
               puts "Failed to confirm job"
+              return
+            end
+
+            if task.empty?
+              puts "Failed to confirm task"
               return
             end
 
