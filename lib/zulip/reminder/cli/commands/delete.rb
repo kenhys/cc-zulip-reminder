@@ -36,7 +36,7 @@ module Zulip
               end
             end
 
-            unless job_id.nil?
+            if job_id.nil?
               puts "No registered jobs"
               return
             end
