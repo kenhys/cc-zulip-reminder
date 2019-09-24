@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'pathname'
 require 'yaml'
+require 'fileutils'
 
 module Zulip
   module Reminder
