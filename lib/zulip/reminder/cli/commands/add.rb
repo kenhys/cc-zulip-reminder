@@ -30,6 +30,7 @@ module Zulip
             job_id = ""
             result["messages"].each do |message|
               content = message["content"].gsub(/(<[^>]*>)/) {""}
+              puts "Check: #{content}"
               case  message["sender_email"]
               when @config.email
                 task = content
